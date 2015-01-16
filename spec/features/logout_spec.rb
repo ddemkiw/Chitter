@@ -1,1 +1,0 @@
-logout_spec.rb

@@ -1,1 +1,0 @@
-post_message_spec.rb
