@@ -3,8 +3,10 @@ require 'data_mapper'
 require 'rack-flash'
 require 'sinatra/partial'
 
-require_relative 'data_mapper_setup'
 
+require_relative 'models/peep'
+require_relative 'models/user'
+require_relative 'data_mapper_setup'
 
 class Chitter < Sinatra::Base
   get '/' do
