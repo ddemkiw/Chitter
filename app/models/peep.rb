@@ -1,3 +1,5 @@
+require_relative 'user'
+
 class Peep
 
   include DataMapper::Resource
@@ -7,7 +9,7 @@ class Peep
   
   # DataMapper.auto_upgrade!
 
-  # belongs_to :user
+  belongs_to  :user
 
 
 end
