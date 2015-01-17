@@ -5,21 +5,23 @@ class User
 
   include DataMapper::Resource
 
+  attr_reader :password
+  attr_accessor :password_confirmation
+  validates_confirmation_of :password
+
   property :id,       Serial
+  property :name,     Text
   property :email,    Text
   property :username, Text
-  # property :password_digest, Text
+  property :password_digest, Text
 
   has n, :peeps, :through => Resource
 
-  # attr_reader :password
-  # attr_accessor :password_confirmation
-  # validates_confirmation_of :password
 
-  # def password=(password)
-  #   @password = password
-  #   self.password_digest = BCrypt::Password.create(password)
-  # end
+  def password=(password)
+    @password = password
+    self.password_digest = BCrypt::Password.create(password)
+  end
 
   # def self.authenticate(email, password)
   #   user = first(:email => email)
@@ -29,7 +31,5 @@ class User
   #     nil 
   #   end 
   # end 
-
-
 
 end
