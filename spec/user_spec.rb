@@ -5,7 +5,6 @@ describe User do
   context 'Demonstration of how datamapper works for users' do 
     
     it 'should be created and then retrieved from the db' do 
-      expect(User.count).to eq(0)
       User.create(  email: 'test@test.com',
                     username: 'JimJim')
       expect(User.count).to eq(1)
