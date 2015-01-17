@@ -11,8 +11,8 @@ class User
 
   property :id,       Serial
   property :name,     Text
-  property :email,    Text
-  property :username, Text
+  property :email,    Text, :unique => true, :message => "This email is already taken"
+  property :username, Text, :unique => true, :message => "This username is already taken"
   property :password_digest, Text
 
   has n, :peeps, :through => Resource
@@ -23,13 +23,13 @@ class User
     self.password_digest = BCrypt::Password.create(password)
   end
 
-  # def self.authenticate(email, password)
-  #   user = first(:email => email)
-  #   if user && BCrypt::Password.new(user.password_digest) == password
-  #     user
-  #   else
-  #     nil 
-  #   end 
-  # end 
+  def self.authenticate(email, password)
+    user = first(:email => email)
+    if user && BCrypt::Password.new(user.password_digest) == password
+      user
+    else
+      nil 
+    end 
+  end 
 
 end

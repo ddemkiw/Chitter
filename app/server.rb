@@ -11,7 +11,7 @@ require_relative 'helpers/application'
 
 class Chitter < Sinatra::Base
 
-  include Helpers
+include Helpers
 
 enable :sessions
 set :session_secret, 'super secret'
@@ -41,16 +41,41 @@ post '/users' do
     session[:user_id] = @user.id
     redirect to('/')
   else
-    flash[:notice] = "Sorry, your passwords don't match"
+    flash.now[:errors] = @user.errors.full_messages
     erb :"users/new"
   end
 end
 
-# post '/peeps' do
-#   text = params["text"]
-#   Peep.create(:user_id =>1, :text => text)
-#   redirect to('/')
-# end
+get '/sessions/new' do
+  erb :"sessions/new"
+end
+
+post '/sessions' do
+  email, password = params[:email], params[:password]
+  user = User.authenticate(email, password)
+  if user
+    session[:user_id] = user.id
+    redirect to('/')
+  else
+    flash[:errors] = ["The email or password is incorrect"]
+    erb :"sessions/new"
+  end
+end
+
+post '/sessions/peeps' do
+  user_id = session[:user_id]
+  text = params["text"]
+  Peep.create(:user_id => user_id, :text => text)
+
+  redirect to('/')
+end
+
+delete '/sessions' do 
+  flash[:notice] = "Good bye!"
+  session[:user_id] = nil 
+  redirect to('/')
+end 
+
 
   # start the server if ruby file executed directly
   run! if app_file == $0

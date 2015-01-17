@@ -4,14 +4,17 @@ Peeps:
 <!-- this output needs to change to have username attached -->
 <ul>
   <% @peeps.each do |peep| %>
-    <li><%= peep.text %></a></li>
+    <li><%= peep.text %></li>
   <% end %>
 </ul>
 <!---->
 
-<div id="new-peep">
-  <form action="/peeps" method="post">
-    Peep: <input type="text" name="text">
-    <input type="submit" value="Peep">
-  </form>
-</div>
+
+<% if current_user %>
+  <div id="new-peep">
+    <form action="/peeps" method="post">
+      Peep: <input type="text" name="text">
+      <input type="submit" value="Peep">
+    </form>
+  </div>
+<% end %>
