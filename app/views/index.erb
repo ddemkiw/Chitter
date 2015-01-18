@@ -1,11 +1,18 @@
-<h1>Welcome to Chitter</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chitter</title>
+  </head>
+  <body>
+    <span id="welcome-message">
+      <h1>Welcome to Chitter</h1>
+    </span>
+      <%= partial :peeps %>
+      <%= partial :"peeps/new" %>
+  </body>
+</html>
+  
 
-Peeps:
-  <ul>
-    <% @peeps.each do |peep| %>
-      <li> <p>Date: <%= peep.timestamp.strftime("%d %b %y %T") if peep.timestamp != nil%></p>
-           <p>User:<%= peep.user.username%>
-           <p>Peep: <%= peep.text%> </li></p>
-    <% end %>
-  </ul>
+
+
 
