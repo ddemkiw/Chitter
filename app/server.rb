@@ -1,83 +1,34 @@
 
-require 'sinatra/base'
+require 'sinatra'
 require 'data_mapper'
 require 'rack-flash'
+require 'sinatra/partial'
 
-require './app/models/peep' 
-require './app/models/user'
 
 require_relative 'data_mapper_setup'
 require_relative 'helpers/application'
 
-class Chitter < Sinatra::Base
+require_relative 'models/peep' 
+require_relative 'models/user'
 
-include Helpers
+require_relative 'controllers/users'
+require_relative 'controllers/sessions'
+require_relative 'controllers/peeps'
 
 enable :sessions
+
 set :session_secret, 'super secret'
+set :partial_template_engine, :erb
+set :public_folder, Proc.new { File.join(root, "..", "/public") }
 
 use Rack::Flash
 use Rack::MethodOverride
- 
-
-get '/' do
-  @peeps = Peep.all
-  erb :index
-end
 
 
-get '/users/new' do
-  @user = User.new
-  erb :"users/new"
-end
-
-post '/users' do
-  @user = User.create( :name => params[:name],
-                      :username => params[:username],
-                      :email => params[:email],
-                      :password => params[:password],
-                      :password_confirmation => params[:password_confirmation])
-  if @user.save
-    session[:user_id] = @user.id
-    redirect to('/')
-  else
-    flash.now[:errors] = @user.errors.full_messages
-    erb :"users/new"
-  end
-end
-
-get '/sessions/new' do
-  erb :"sessions/new"
-end
-
-post '/sessions' do
-  email, password = params[:email], params[:password]
-  user = User.authenticate(email, password)
-  if user
-    session[:user_id] = user.id
-    redirect to('/')
-  else
-    flash[:errors] = ["The email or password is incorrect"]
-    erb :"sessions/new"
-  end
-end
-
-post '/sessions/peeps' do
-  user_id = session[:user_id]
-  text = params["text"]
-  Peep.create(:user_id => user_id, :text => text)
-
-  redirect to('/')
-end
-
-delete '/sessions' do 
-  flash[:notice] = "Good bye!"
-  session[:user_id] = nil 
-  redirect to('/')
-end 
 
 
-  # start the server if ruby file executed directly
-  run! if app_file == $0
-end
+
+
+
+
 

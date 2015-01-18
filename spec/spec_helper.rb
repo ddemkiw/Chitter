@@ -1,3 +1,4 @@
+
 ENV['RACK_ENV'] = 'test'
 
 require './app/server'
@@ -59,7 +60,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  Capybara.app = Chitter
+  Capybara.app = Sinatra::Application
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.

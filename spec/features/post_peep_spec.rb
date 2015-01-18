@@ -2,7 +2,7 @@ require 'spec_helper'
 
 require_relative 'helpers/session'
 
-feature "User adds a new peep" do
+feature "User posts a new peep" do
 
   include SessionHelpers
 
@@ -14,7 +14,7 @@ feature "User adds a new peep" do
                 :password_confirmation => 'test')
     end
 
-  scenario "when logged in and browsing the homepage" do
+  scenario "after adding peep, peep should be displayed on homepage" do
     sign_in('test@test.com', 'test')
     expect(Peep.count).to eq(0)
     visit '/'

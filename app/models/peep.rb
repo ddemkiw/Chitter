@@ -6,7 +6,7 @@ class Peep
 
   property :id,    Serial
   property :text,  Text
-  property :created_at, DateTime
+  property :timestamp, DateTime
   
   # DataMapper.auto_upgrade!
 

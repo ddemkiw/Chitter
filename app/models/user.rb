@@ -15,7 +15,7 @@ class User
   property :username, Text, :unique => true, :message => "This username is already taken"
   property :password_digest, Text
 
-  has n, :peeps, :through => Resource
+  has n, :peeps
 
 
   def password=(password)
