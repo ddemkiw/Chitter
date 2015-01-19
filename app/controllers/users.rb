@@ -9,6 +9,7 @@ post '/users' do
                       :email => params[:email],
                       :password => params[:password],
                       :password_confirmation => params[:password_confirmation])
+  @user.save
   if @user.save
     session[:user_id] = @user.id
     redirect to('/')
@@ -17,3 +18,4 @@ post '/users' do
     erb :"users/new"
   end
 end
+ 
