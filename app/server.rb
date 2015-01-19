@@ -2,6 +2,7 @@
 require 'sinatra/base'
 require 'data_mapper'
 require 'rack-flash'
+require 'sinatra/partial'
 
 require './app/models/peep' 
 require './app/models/user'
@@ -14,7 +15,11 @@ class Chitter < Sinatra::Base
 include Helpers
 
 enable :sessions
+
+set :partial_template_engine, :erb
+set :public_folder, Proc.new { File.join(root, "..", "/public") }
 set :session_secret, 'super secret'
+
 
 use Rack::Flash
 use Rack::MethodOverride
