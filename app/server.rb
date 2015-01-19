@@ -62,11 +62,11 @@ post '/sessions' do
   end
 end
 
-post '/sessions/peeps' do
+post '/peeps' do
   user_id = session[:user_id]
   text = params["text"]
-  Peep.create(:user_id => user_id, :text => text)
-
+  @username = current_user.username if current_user
+  Peep.create(:user_id => user_id, :text => text, :timestamp => Time.now)
   redirect to('/')
 end
 
