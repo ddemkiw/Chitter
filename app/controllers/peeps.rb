@@ -10,4 +10,3 @@ post '/peeps' do
   redirect to('/')
 end
 
-
